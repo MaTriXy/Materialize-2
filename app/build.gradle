@@ -6,14 +6,16 @@ try {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion setup.compileSdk
+    buildToolsVersion setup.buildTools
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 112
-        versionName '1.1.2'
+        minSdkVersion setup.minSdk
+        targetSdkVersion setup.targetSdk
+        versionCode release.versionCode
+        versionName release.versionName
+
+        setProperty("archivesBaseName", "Materialize-v$versionName-c$versionCode")
     }
     buildTypes {
         debug {
@@ -40,15 +42,15 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
+    implementation "androidx.appcompat:appcompat:${versions.androidXVersion}"
+    implementation "androidx.recyclerview:recyclerview:${versions.androidXVersion}"
+    implementation "androidx.cardview:cardview:${versions.androidXVersion}"
 
     implementation project(':library')
 
     //used to generate the drawer on the left
     //https://github.com/mikepenz/MaterialDrawer
-    implementation('com.mikepenz:materialdrawer:6.0.0@aar') {
+    implementation('com.mikepenz:materialdrawer:6.1.0') {
         transitive = true
         exclude group: 'com.android.support'
         exclude group: 'com.mikepenz', module: 'materialize'
@@ -56,7 +58,7 @@ dependencies {
 
     // used to generate the Open Source section
     // https://github.com/mikepenz/AboutLibraries
-    implementation('com.mikepenz:aboutlibraries:6.0.0@aar') {
+    implementation('com.mikepenz:aboutlibraries:6.2.0') {
         transitive = true
         exclude group: 'com.android.support'
     }
